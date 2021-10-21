@@ -13,7 +13,7 @@ CREATE TABLE role(
     id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(30) NOT NULL,
     salary DECIMAL(10, 2) NOT NULL,
-    department_id INT
+    department_id INT,
 );
 -- Creating employee table
 CREATE TABLE employee(
