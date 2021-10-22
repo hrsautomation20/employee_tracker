@@ -1,20 +1,24 @@
--- Insert value into department table
-INSERT INTO department(dept_name)
-VALUES("Engineering"),
-    ("Sales"),
-    ("Finance"),
-    ("Legal"),
-    ("Marketing");
--- Insert value into role table
-INSERT INTO role(title, salary, department_id)
-VALUES("Engineer", 85000, 1),
-    ("Senior Engineer", 125000, 1),
-    ("CFO", 350000, 3),
-    ("Chief Counsel", 300000, 4);
--- Insert value into employee table
-INSERT INTO employee(first_name, last_name, role_id, manager_id)
-VALUES ('John', 'Doe', 1, 2),
-    ('James', 'Gibson', 1, null),
-    ('Ronnie', 'Rodrigues', 1, 2),
-    ('Jimmy', 'Choo', 2, 2),
-    ('Larry', 'Smith', 4, null);
+USE employeeTrackerDB;
+INSERT INTO department (name)
+VALUES ('Sales'),
+    ('Engineering'),
+    ('Finance'),
+    ('Legal');
+INSERT INTO role (title, salary, department_id)
+VALUES ('Sales Lead', 100000, 1),
+    ('Salesperson', 80000, 1),
+    ('Lead Engineer', 150000, 2),
+    ('Software Engineer', 120000, 2),
+    ('Account Manager', 160000, 3),
+    ('Accountant', 125000, 3),
+    ('Legal Team Lead', 250000, 4),
+    ('Lawyer', 190000, 4);
+INSERT INTO employees (first_name, last_name, role_id, manager_id)
+VALUES ('John', 'Doe', 1, NULL),
+    ('Mike', 'Chan', 2, 1),
+    ('Ashley', 'Rodriguez', 3, NULL),
+    ('Kevin', 'Tupik', 4, 3),
+    ('Kunal', 'Singh', 5, NULL),
+    ('Malia', 'Brown', 6, 5),
+    ('Sarah', 'Lourd', 7, NULL),
+    ('Tom', 'Allen', 8, 7);

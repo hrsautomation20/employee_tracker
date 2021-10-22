@@ -1,25 +1,26 @@
--- Dropping and Creating database 
-DROP DATABASE IF EXISTS employees;
-CREATE DATABASE employees;
--- Using employees database
-USE employees;
--- Creating department table
-CREATE TABLE department(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    dept_name VARCHAR(30) NOT NULL
+DROP DATABASE IF EXISTS employeeTrackerDB;
+CREATE database employeeTrackerDB;
+USE employeeTrackerDB;
+CREATE TABLE department (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(30) NULL,
+    PRIMARY KEY (id)
 );
--- Creating role table
-CREATE TABLE role(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(30) NOT NULL,
-    salary DECIMAL(10, 2) NOT NULL,
+CREATE TABLE role (
+    id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(30),
+    salary DECIMAL,
     department_id INT,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_department_id FOREIGN KEY (department_id) REFERENCES department(id)
 );
--- Creating employee table
-CREATE TABLE employee(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    first_name VARCHAR(30) NOT NULL,
-    last_name VARCHAR(30) NOT NULL,
+CREATE TABLE employees (
+    id INT NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR(30),
+    last_name VARCHAR(30),
     role_id INT,
-    manager_id INT
+    manager_id INT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_role_id FOREIGN KEY (role_id) REFERENCES role(id),
+    CONSTRAINT FK_manager_id FOREIGN KEY (manager_id) REFERENCES employees(id)
 );
