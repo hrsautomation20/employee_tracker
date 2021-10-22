@@ -124,34 +124,93 @@ const viewAllRoles = () => {
 };
 
 //VIEW ALL DEPARTMENTS
-const viewAllDepartment = () => {};
+const viewAllDepartment = () => {
+  let sql = ``;
+};
 
 // VIEW ALL EMPLOYEES BY DEPARTMENT
-const viewEmployeeByDepartment = () => {};
+const viewEmployeeByDepartment = () => {
+  let sql = ``;
+};
 
 //VIEW DEPARTMENT BY BUDGETS
-const viewDepartmentBudget = () => {};
+const viewDepartmentBudget = () => {
+  let sql = ``;
+};
 
 //UPDATE AN EMPLOYEE'S ROLE
-const updateEmployeeRole = () => {};
+const updateEmployeeRole = () => {
+  let sql = ``;
+};
 
 //UPDATE AN EMPLOYEE'S MANAGER
-const updateEmployeeManager = () => {};
+const updateEmployeeManager = () => {
+  let sql = ``;
+};
 
 // ADD A NEW EMPLOYEE
-const addEmployee = () => {};
+const addEmployee = () => {
+  let sql = ``;
+};
 
 //ADD A NEW ROLE
-const addRole = () => {};
+const addRole = () => {
+  let sql = ``;
+};
 
 //ADD A NEW DEPARTMENT
-const addDepartment = () => {};
+const addDepartment = () => {
+  let sql = ``;
+};
 
 //DELETE AN EMPLOYEE
-const removeEmployee = () => {};
+const removeEmployee = () => {
+  let sql = `SELECT employees.id, employees.first_name, employees.last_name FROM employees`;
+
+  connection.query(sql, (error, response) => {
+    if (error) throw error;
+    let employeeNamesArray = [];
+    response.forEach((employees) => {
+      employeeNamesArray.push(`${employees.first_name} ${employees.last_name}`);
+    });
+
+    inquirer
+      .prompt([
+        {
+          name: "chosenEmployee",
+          type: "list",
+          message: "Which employee would you like to remove?",
+          choices: employeeNamesArray,
+        },
+      ])
+      .then((answer) => {
+        let employeeId;
+
+        response.forEach((employees) => {
+          if (
+            answer.chosenEmployee ===
+            `${employees.first_name} ${employees.last_name}`
+          ) {
+            employeeId = employees.id;
+          }
+        });
+
+        let sql = `DELETE FROM employees WHERE employees.id = ?`;
+        connection.query(sql, [employeeId], (error) => {
+          if (error) throw error;
+          console.log(`Employee Successfully Removed`);
+          viewAllEmployees();
+        });
+      });
+  });
+};
 
 //DELETE AN ROLE
-const removeRole = () => {};
+const removeRole = () => {
+  let sql = ``;
+};
 
 //DELETE AN DEPARTMENT
-const removeDepartment = () => {};
+const removeDepartment = () => {
+  let sql = ``;
+};
