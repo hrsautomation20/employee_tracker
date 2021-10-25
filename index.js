@@ -2,6 +2,7 @@ const connection = require("./config/connection");
 const inquirer = require("inquirer");
 const consTable = require("console.table");
 const asciLogo = require("asciiart-logo");
+const colors = require("colors");
 
 connection.connect((err) => {
   if (err) throw err;
@@ -35,66 +36,66 @@ const promptUser = () => {
         type: "list",
         message: "Please select an option:",
         choices: [
-          "View All Employees",
-          "View All Roles",
-          "View All Departments",
-          "View All Employees By Department",
-          "View Department Budgets",
-          "Update Employee Role",
-          "Update Employee Manager",
-          "Add Employee",
-          "Add Role",
-          "Add Department",
-          "Remove Employee",
-          "Remove Role",
-          "Remove Department",
-          "Exit",
+          "View All Employees".blue,
+          "View All Roles".blue,
+          "View All Departments".blue,
+          "View All Employees By Department".blue,
+          "View Department Budgets".blue,
+          "Update Employee Role".yellow,
+          "Update Employee Manager".yellow,
+          "Add Employee".green,
+          "Add Role".green,
+          "Add Department".green,
+          "Remove Employee".red,
+          "Remove Role".red,
+          "Remove Department".red,
+          "Exit".rainbow,
         ],
       },
     ])
     .then((answers) => {
       const { choices } = answers;
 
-      if (choices === "View All Employees") {
+      if (choices === "View All Employees".blue) {
         viewAllEmployees();
       }
-      if (choices === "View All Roles") {
+      if (choices === "View All Roles".blue) {
         viewAllRoles();
       }
-      if (choices === "View All Departments") {
+      if (choices === "View All Departments".blue) {
         viewAllDepartment();
       }
-      if (choices === "View All Employees By Department") {
+      if (choices === "View All Employees By Department".blue) {
         viewEmployeeByDepartment();
       }
-      if (choices === "View Department Budgets") {
+      if (choices === "View Department Budgets".blue) {
         viewDepartmentBudget();
       }
-      if (choices === "Update Employee Role") {
+      if (choices === "Update Employee Role".yellow) {
         updateEmployeeRole();
       }
-      if (choices === "Update Employee Manager") {
+      if (choices === "Update Employee Manager".yellow) {
         updateEmployeeManager();
       }
-      if (choices === "Add Employee") {
+      if (choices === "Add Employee".green) {
         addEmployee();
       }
-      if (choices === "Add Role") {
+      if (choices === "Add Role".green) {
         addRole();
       }
-      if (choices === "Add Department") {
+      if (choices === "Add Department".green) {
         addDepartment();
       }
-      if (choices === "Remove Employee") {
+      if (choices === "Remove Employee".red) {
         removeEmployee();
       }
-      if (choices === "Remove Role") {
+      if (choices === "Remove Role".red) {
         removeRole();
       }
-      if (choices === "Remove Department") {
+      if (choices === "Remove Department".red) {
         removeDepartment();
       }
-      if (choices === "Exit") {
+      if (choices === "Exit".rainbow) {
         connection.end();
       }
     });
@@ -105,7 +106,10 @@ const viewAllEmployees = () => {
   let sql = `SELECT * FROM employee`;
   connection.query(sql, (error, response) => {
     if (error) throw error;
+    console.log(`======================================================`.blue);
     console.table(response);
+    console.log(`======================================================`.blue);
+
     promptUser();
   });
 };
@@ -115,9 +119,11 @@ const viewAllRoles = () => {
   const sql = `SELECT role.id, role.title, department.name AS department FROM role INNER JOIN department ON role.department_id = department.id`;
   connection.query(sql, (error, response) => {
     if (error) throw error;
+    console.log(`======================================================`.blue);
     response.forEach((role) => {
       console.log(role.title);
     });
+    console.log(`======================================================`.blue);
     promptUser();
   });
 };
@@ -127,7 +133,9 @@ const viewAllDepartment = () => {
   let sql = `SELECT department.id AS id, department.name AS department FROM department`;
   connection.query(sql, (error, response) => {
     if (error) throw error;
+    console.log(`======================================================`.blue);
     console.table(response);
+    console.log(`======================================================`.blue);
     promptUser();
   });
 };
@@ -137,7 +145,9 @@ const viewEmployeeByDepartment = () => {
   const sql = `SELECT employee.first_name, employee.last_name, department.name AS department FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id`;
   connection.query(sql, (err, response) => {
     if (err) throw err;
+    console.log(`======================================================`.blue);
     console.table(response);
+    console.log(`======================================================`.blue);
     promptUser();
   });
 };
@@ -147,7 +157,9 @@ const viewDepartmentBudget = () => {
   const sql = `SELECT department_id AS id, department.name AS department, SUM(salary) AS budget FROM role INNER JOIN department ON role.department_id = department.id GROUP BY role.department_id;`;
   connection.query(sql, (error, response) => {
     if (error) throw error;
+    console.log(`======================================================`.blue);
     console.table(response);
+    console.log(`======================================================`.blue);
     promptUser();
   });
 };
